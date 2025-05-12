@@ -14,6 +14,8 @@ Route::get('/terms', function () {
 
 Route::get('{idea}/comments', [CommentController::class, "store"])->name('ideas.comments.store')->middleware('auth');
 Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
+Route::post('/comments/{comment}/like', [CommentController::class, 'like'])->name('comments.like')->middleware('auth');
+
 
 Route::resource('ideas', ideaController::class)->except(['index', 'create', 'show'])->middleware('auth');
 Route::resource('ideas', ideaController::class)->only(['show']);

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,6 +15,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreignId('idea_id')->constrained()->cascadeOnDelete();
             $table->string('content');
+            $table->json('like')->default(json_encode([]));
             $table->timestamps();
         });
     }

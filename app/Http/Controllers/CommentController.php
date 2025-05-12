@@ -17,6 +17,20 @@ class CommentController extends Controller
         $comment->save();
         return redirect()->route('ideas.show', $idea->id)->with('success', 'comment posted successfully');
     }
+    public function like($comment){
+        $comment = Comment::find($comment);
+        $like = json_decode($comment->like, true) ?? [];
+        if ($comment->user_id != auth()->id()) {
+            if (!in_array(auth()->id(), $like)) {
+                $like[] = auth()->id();
+            } else {
+                $like = array_diff($like, [auth()->id()]);
+            }
+            $comment->like = json_encode($like);
+            $comment->update();
+        }
+        return redirect()->back();
+    }
     public function destroy(Comment $comment)
     {
         $comment->delete();
